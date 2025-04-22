@@ -15,21 +15,25 @@ import numpy as np
 import math
 import wandb 
 
-wandb.init(project="GC-mnist-cnn-epsilon=0.03-w=5e-1", entity="yiweilu")
+os.makedirs("clean_gradients", exist_ok=True)
+os.makedirs("poisoned_models/cnn", exist_ok=True)
+os.makedirs("poisoned_models/cnn/img", exist_ok=True)
+
+# wandb.init(project="GC-mnist-cnn-epsilon=0.03-w=5e-1", entity="qjzheng-boston-university")
 
 
 torch.manual_seed(0)
 
 wandb.config = {
   "epsilon": 0.03,
-  "epochs": 2000,
-  "lr": 1e1
+  "epochs": 5,
+  "lr": 0.5
 }
 
 # hyperparameters
 epsilon = 0.03
-epochs =2000
-lr =0.5e1
+epochs =5
+lr =0.5
 
 train_size = 60000
 test_size=10000
@@ -39,7 +43,7 @@ device = 'cuda:0'
 # define model 
 model = ConvNet().to(device).double()
 
-model.load_state_dict(torch.load("target_models/mnist_gd_cnn_5e-1.pt"))
+model.load_state_dict(torch.load("../GradPC/models/mnist_cnn.pt"))
 
 
 # define dataset and dataloader 
@@ -83,7 +87,7 @@ for data, target in pre_loader:
     # wrt to w here
     grad_c= autograd(loss_c,tuple(model.parameters()),create_graph=False)
     total_grad_clean +=grad_c[0].to('cpu')
-    
+os.makedirs("clean_gradients", exist_ok=True)    
 torch.save(total_grad_clean, 'clean_gradients/clean_grad_cnn.pt')
 
 loss_all = []
@@ -132,9 +136,10 @@ def attack(epoch,lr):
         if loss < 1:
             break
             
-        update = autograd(loss,data_p_temp,create_graph=False)
+        update = autograd(loss,data_p_temp,create_graph=True)
         
         data_t_temp = data_p_temp - lr * update[0]
+        # import pdb; pdb.set_trace()
 
         with torch.no_grad():
             data_p[i:int(i+epsilon*len(data))] = data_t_temp
@@ -142,7 +147,7 @@ def attack(epoch,lr):
         i = int(i+epsilon*len(data))
         torch.save(data_t_temp, 'poisoned_models/cnn/data_p_{}.pt'.format(epsilon))
         
-        wandb.log({"training_loss_during_attack":loss})
+        # wandb.log({"training_loss_during_attack":loss})
         
         print("epoch:{},loss:{},lr:{}".format(epoch, loss,lr))
     torch.save(data_p, 'poisoned_models/cnn/data_p_{}.pt'.format(epsilon))
@@ -209,7 +214,7 @@ def train(epoch):
         loss = criterion(output,target)
         loss.backward()
         optimizer1.step()
-        train_loss_all.append(loss)
+        train_loss_all.append(loss.detach().cpu().numpy())
         torch.save(model1.state_dict(), 'poisoned_models/cnn/poisoned_cnn_model_{}.pt'.format(epsilon))
         print("epoch:{},loss:{}".format(epoch, loss))
         
@@ -233,12 +238,13 @@ def test():
         test_loss, correct, len(test_loader_retrain.dataset),
         100. * correct / len(test_loader_retrain.dataset)))
     
-for epoch in range(100):
+for epoch in range(1):
     train(epoch)
     losses = test()
     
     
 plt.plot(train_loss_all)
+
 plt.savefig('poisoned_models/cnn/img/retrain_loss_{}.png'.format(epsilon))
 plt.show()
 

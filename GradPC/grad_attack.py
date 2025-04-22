@@ -17,8 +17,8 @@ def train(args, model, device, train_loader, optimizer, epoch):
         criterion = nn.CrossEntropyLoss()
         data, target = data.to(device), target.to(device)
         optimizer.zero_grad()
-        #output = model(data.view(data.size(0), -1))
-        output = model(data)
+        output = model(data.view(data.size(0), -1))
+        # output = model(data)
         loss = criterion(output, target)
         loss.backward()
         optimizer.step()
@@ -38,8 +38,8 @@ def test(model, device, test_loader):
         for data, target in test_loader:
             criterion = nn.CrossEntropyLoss()
             data, target = data.to(device), target.to(device)
-            #output = model(data.view(data.size(0), -1))
-            output = model(data)
+            output = model(data.view(data.size(0), -1))
+            # output = model(data)
             test_loss += criterion(output, target).item()  # sum up batch loss
             pred = output.argmax(dim=1, keepdim=True)  # get the index of the max log-probability
             correct += pred.eq(target.view_as(pred)).sum().item()
@@ -109,9 +109,9 @@ def main():
 
     #model = MLP().to(device)
     #odel = LinearModel().to(device)
-    model = ConvNet().to(device)# Net().to(device)
+    # model = ConvNet().to(device)# Net().to(device)
     #model = Follower().to(device)
-    #model=LR().to(device)
+    model=LR().to(device)
     optimizer = optim.Adadelta(model.parameters(), lr=args.lr)
 
     scheduler = StepLR(optimizer, step_size=1, gamma=args.gamma)
@@ -128,7 +128,7 @@ def main():
         test(model, device, test_loader)
 
     if args.save_model:
-        torch.save(model.state_dict(), "models/mnist_gd_cnn_5e-1.pt")
+        torch.save(model.state_dict(), "models/mnist.pt")
 
 
 if __name__ == '__main__':
