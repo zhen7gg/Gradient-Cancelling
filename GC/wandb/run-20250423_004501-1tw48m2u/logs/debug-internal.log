@@ -1,0 +1,7 @@
+{"time":"2025-04-23T00:45:01.654227621+08:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"/root/Gradient-Cancelling/GC/wandb/run-20250423_004501-1tw48m2u/logs/debug-core.log"}
+{"time":"2025-04-23T00:45:02.303492564+08:00","level":"INFO","msg":"created new stream","id":"1tw48m2u"}
+{"time":"2025-04-23T00:45:02.303550535+08:00","level":"INFO","msg":"stream: started","id":"1tw48m2u"}
+{"time":"2025-04-23T00:45:02.303582743+08:00","level":"INFO","msg":"writer: Do: started","stream_id":"1tw48m2u"}
+{"time":"2025-04-23T00:45:02.303619314+08:00","level":"INFO","msg":"sender: started","stream_id":"1tw48m2u"}
+{"time":"2025-04-23T00:45:02.303660184+08:00","level":"INFO","msg":"handler: started","stream_id":"1tw48m2u"}
+{"time":"2025-04-23T00:45:02.746972618+08:00","level":"INFO","msg":"Starting system monitor"}

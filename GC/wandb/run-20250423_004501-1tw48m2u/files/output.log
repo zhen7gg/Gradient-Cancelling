@@ -1,0 +1,30 @@
+/root/Gradient-Cancelling/GC/mnist_lr-0.03.py:39: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(torch.load("../GradPC/target_models/mnist_lr.pt"))
+==> start gradient canceling attack with given target parameters
+==> model will be saved in poisoned_models
+epoch:0,loss:6826850.9710194385,lr:0.001
+/root/Gradient-Cancelling/GC/mnist_lr-0.03.py:81: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  data_p = torch.load('poisoned_models/lr/data_p_{}.pt'.format(epsilon))
+/root/Gradient-Cancelling/GC/mnist_lr-0.03.py:82: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  target_p = torch.load('poisoned_models/lr/target_p_{}.pt'.format(epsilon))
+epoch:1,loss:18935984.109610517,lr:0.0009999975326009292
+epoch:2,loss:6992358.197656148,lr:0.0009999901304280686
+epoch:3,loss:4407223.584978736,lr:0.000999977793554475
+epoch:4,loss:3245176.808233778,lr:0.0009999605221019082
+epoch:5,loss:2592181.992708343,lr:0.0009999383162408303
+epoch:6,loss:1923036.3108606387,lr:0.0009999111761904045
+epoch:7,loss:1604585.1427212004,lr:0.000999879102218492
+epoch:8,loss:1317577.3849191773,lr:0.00099984209464165
+epoch:9,loss:1206074.5825972962,lr:0.0009998001538251283
+epoch:10,loss:1181162.777991879,lr:0.0009997532801828658
+epoch:11,loss:1091245.693989226,lr:0.0009997014741774865
+epoch:12,loss:948814.9765818011,lr:0.0009996447363202947
+epoch:13,loss:807913.9433098433,lr:0.00099958306717127
+epoch:14,loss:848744.167659645,lr:0.0009995164673390624
+epoch:15,loss:741316.8384022834,lr:0.0009994449374809851
+epoch:16,loss:651060.1021897185,lr:0.0009993684783030088
+epoch:17,loss:571187.9397341597,lr:0.000999287090559755
+epoch:18,loss:522545.92038307403,lr:0.0009992007750544876
+epoch:19,loss:503460.5347767927,lr:0.000999109532639106
+epoch:20,loss:460877.80014564405,lr:0.0009990133642141358
+epoch:21,loss:423256.8427090965,lr:0.0009989122707287207

@@ -16,7 +16,6 @@ import math
 import wandb 
 
 os.makedirs("clean_gradients", exist_ok=True)
-os.makedirs("poisoned_models/cnn", exist_ok=True)
 os.makedirs("poisoned_models/cnn/img", exist_ok=True)
 
 # wandb.init(project="GC-mnist-cnn-epsilon=0.03-w=5e-1", entity="qjzheng-boston-university")
@@ -238,7 +237,7 @@ def test():
         test_loss, correct, len(test_loader_retrain.dataset),
         100. * correct / len(test_loader_retrain.dataset)))
     
-for epoch in range(1):
+for epoch in range(100):
     train(epoch)
     losses = test()
     

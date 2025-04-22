@@ -15,7 +15,7 @@ import numpy as np
 import math
 import wandb 
 
-# wandb.init(project="GC-mnist-lr-epsilon=0.03", entity="yiweilu")
+wandb.init(project="GC-mnist-lr-epsilon=0.03", entity="qjzheng-boston-university")
 os.makedirs("poisoned_models/lr/img", exist_ok=True)
 
 torch.manual_seed(0)
@@ -23,13 +23,13 @@ torch.manual_seed(0)
 wandb.config = {
   "epsilon": 0.03,
   "epochs": 1000,
-  "lr": 1e1
+  "lr": 1e-3
 }
 
 # hyperparameters
 epsilon = 0.03
-epochs = 100
-lr =0.5
+epochs = 1000
+lr =1e-3
 
 device = 'cuda:0'
 
@@ -117,7 +117,7 @@ def attack(epoch,lr):
         #print("data change:{}".format(torch.mean(data_t-data_p)))
         torch.save(data_t, 'poisoned_models/lr/data_p_{}.pt'.format(epsilon))
         
-        # wandb.log({"training_loss_during_attack":loss})
+        wandb.log({"training_loss_during_attack":loss})
         
         print("epoch:{},loss:{},lr:{}".format(epoch, loss,lr))
         
@@ -207,7 +207,7 @@ def test():
         test_loss, correct, len(test_loader_retrain.dataset),
         100. * correct / len(test_loader_retrain.dataset)))
     
-for epoch in range(5):
+for epoch in range(epochs):
     train(epoch)
     losses = test()
     
