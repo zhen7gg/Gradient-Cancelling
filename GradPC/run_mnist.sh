@@ -5,7 +5,7 @@ mkdir -p logs
 mkdir -p models
 
 # 设置实验名
-EXP_NAME="mnist_lr"
+EXP_NAME="mnist_cnn"
 
 echo "Running experiment: $EXP_NAME"
 
@@ -13,13 +13,13 @@ echo "Running experiment: $EXP_NAME"
 python grad_attack.py \
   --batch-size 64 \
   --test-batch-size 1000 \
-  --epochs 14 \
+  --epochs 1 \
   --lr 1 \
   --gamma 0.7 \
   --attack \
   --LP l2 \
-  --eps 1e-4 \
-  --attack_lr 1e-3 \
+  --eps 0.5 \
+  --attack_lr 1 \
   --save-model \
   > logs/${EXP_NAME}.log
 
